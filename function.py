@@ -7,7 +7,7 @@ from google.oauth2 import service_account
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # Pegando as credenciais do secrets do Streamlit
-service_account_info = json.loads(st.secrets["gcp_service_account"].to_json())
+service_account_info = st.secrets["gcp_service_account"]
 creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
 
 # Autorizando com gspread
