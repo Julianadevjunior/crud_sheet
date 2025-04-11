@@ -1,21 +1,21 @@
 import gspread
-from google.oauth2.service_account import Credentials
+import streamlit as st
+import json
+from google.oauth2 import service_account
 
 # Escopos necessários para acessar o Google Sheets
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-# Caminho para o arquivo JSON com as credenciais
-CREDENTIALS_FILE = 'crud-456119-62e29f1da7be.json'
+# Pegando as credenciais do secrets do Streamlit
+service_account_info = json.loads(st.secrets["gcp_service_account"].to_json())
+creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+
+# Autorizando com gspread
+client = gspread.authorize(creds)
 
 # ID da planilha do Google Sheets
 SPREADSHEET_ID = '1hcCMgIIFenfWaZrGyqG16RudnV47-wiz2rl7U4lkk5Y'
-
-# Nome da planilha dentro do arquivo
 WORKSHEET_NAME = 'imovel'
-
-# Autenticação
-creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=SCOPES)
-client = gspread.authorize(creds)
 
 # Acessar a planilha
 sheet = client.open_by_key(SPREADSHEET_ID).worksheet(WORKSHEET_NAME)
