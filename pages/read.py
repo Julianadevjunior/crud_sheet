@@ -98,7 +98,7 @@ for linha in dividir_em_linhas(dados, 3):
             thumb_url = get_image_url(id_imovel)
             img_base64 = gerar_base64_imagem(thumb_url) if thumb_url else "https://via.placeholder.com/400x280.png?text=Sem+Imagem"
 
-            detalhes_url = f"https://seusite.com/imoveis/{id_imovel}"
+            detalhes_url = f"/imovel?id={id_imovel}"
             whatsapp_url = f"https://wa.me/55SEUNUMERO?text=Olá! Tenho interesse no imóvel de referência {id_imovel}."
 
             html_card = f"""
@@ -118,11 +118,11 @@ for linha in dividir_em_linhas(dados, 3):
                     <p style="margin:4px 0; font-size:13px;">📐 Área útil: <strong>{area}m²</strong></p>
                     <p style="margin:8px 0 0 0; font-size:16px; font-weight:bold; color:#2E7D32;">R$ {valor:,.2f}</p>
                     <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
-                        <a href="{detalhes_url}" target="_blank" style="text-decoration:none;">
-                            <button style="padding:6px 10px; font-size:13px; border:1px solid #ccc; border-radius:6px; background:#f9f9f9; cursor:pointer;">
-                                🔍 Ver
-                            </button>
-                        </a>
+                      <a href="{detalhes_url}" style="text-decoration:none;">
+                        <button style="padding:6px 10px; font-size:13px; border:1px solid #ccc; border-radius:6px; background:#f9f9f9; cursor:pointer;">
+                            🔍 Ver
+                        </button>
+                     </a>
                         <a href="{whatsapp_url}" target="_blank" style="text-decoration:none;">
                             <button style="padding:6px 10px; font-size:13px; border:none; border-radius:6px; background:#25D366; color:white; cursor:pointer;">
                                 💬 Whats
