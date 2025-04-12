@@ -2,9 +2,9 @@ import gspread
 import streamlit as st
 import json
 from google.oauth2 import service_account
-
+import os
 # Escopos necessários para acessar o Google Sheets
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
 
 # Pegando as credenciais do secrets do Streamlit
 service_account_info = st.secrets["gcp_service_account"]
@@ -44,3 +44,54 @@ def delete_row(row):
 # print(data)
 # update_cell(2, 2, 'Ap')
 # delete_row(3)
+
+def fotos(cod):
+    # Criar pasta se não existir
+    UPLOAD_FOLDER = f"midias/fotos_{cod}"
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+    # Upload do arquivo
+    fotos = st.file_uploader("Fotos", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
+
+    if st.button("Salvar", key="fotos"):
+        # Salvar os arquivos
+        if fotos:
+            for foto in fotos:
+                caminho_arquivo = os.path.join(UPLOAD_FOLDER, foto.name)
+                with open(caminho_arquivo, "wb") as f:
+                    f.write(foto.getbuffer())
+                st.success(f"Arquivo salvo: {foto.name}")
+
+
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+from google.oauth2 import service_account
+
+# Autenticação
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
+credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=SCOPES)
+drive_service = build('drive', 'v3', credentials=credentials)
+
+
+# Função para upload
+def upload_imagem(file_path, nome_arquivo, folder_id):
+    file_metadata = {
+        'name': nome_arquivo,
+        'parents': [folder_id]
+    }
+    media = MediaFileUpload(file_path, resumable=True)
+    file = drive_service.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields='id'
+    ).execute()
+
+    # Tornar público
+    drive_service.permissions().create(
+        fileId=file['id'],
+        body={'type': 'anyone', 'role': 'reader'}
+    ).execute()
+
+    # Link direto da imagem
+    return f"https://drive.google.com/uc?id={file['id']}"
+

@@ -4,6 +4,11 @@ import streamlit as st
 import function
 import pandas as pd
 
+col1, col2 = st.columns([14.5, 2])
+
+with col2:
+    if st.button("←Voltar", key="Voltar_del"):
+        st.switch_page(st.Page("pages/menu_gerenciador.py"))
 
 # Tela para editar informações
 st.markdown("<p style='color:black; font-size:25px; text-align:center'><b>Atualizar imóveis</b></p>", unsafe_allow_html=True)

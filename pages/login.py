@@ -20,4 +20,4 @@ else:
     st.error(f"E-mail {email} não cadastrado!")
 
 if st.button("Entrar", key='bto_login', use_container_width=True) and st.session_state['login'] == True:
-    st.switch_page("pages/read.py")
+    st.switch_page("pages/menu_gerenciador.py")
