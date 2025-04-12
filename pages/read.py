@@ -7,7 +7,7 @@ from io import BytesIO
 import base64
 
 
-@st.cache_data(show_spinner=False)
+# @st.cache_data(show_spinner=False)
 def carregar_dados():
     return function.read_data()
 
