@@ -55,7 +55,7 @@ with form:
 
                     url, file_id = crud_image.upload_imagem(nome_arquivo, nome_arquivo, pasta_drive_id)
                     st.image(imagem, caption="Imagem enviada com sucesso!", use_column_width=True)
-                    st.write("🔗 URL pública:", url)
+                    st.rerun()
 
             else:
                 st.info("Imóvel cadastrado, mas nenhuma imagem foi enviada.")

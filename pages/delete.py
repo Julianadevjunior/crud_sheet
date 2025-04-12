@@ -42,6 +42,7 @@ with cont:
                 if st.button("Excluir", key="bto_excluir"):
                     function.delete_row(linha)
                     st.success("Excluido com sucesso")
+                    st.rerun()
 
 
 

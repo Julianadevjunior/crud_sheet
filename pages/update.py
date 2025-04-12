@@ -62,6 +62,7 @@ with cont:
                     for col, titulo in enumerate(st.session_state['form_atualizar']):
                         function.update_cell(idx+2, col+1, titulo)
                     st.success("Atualizado")
+                    st.rerun()
 
 
 
