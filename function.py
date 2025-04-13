@@ -95,3 +95,105 @@ def upload_imagem(file_path, nome_arquivo, folder_id):
     # Link direto da imagem
     return f"https://drive.google.com/uc?id={file['id']}"
 
+def bairros():
+    lista = [
+        "Anhanguera",
+        "Aviação",
+        "Balneário Esmeralda",
+        "Balneário Flórida",
+        "Balneário Maracanã",
+        "Balneário Mirim",
+        "Balneário Paquetá",
+        "Balneário Real",
+        "Boqueirão",
+        "Caiçara",
+        "Canto do Forte",
+        "Cidade da Criança",
+        "Esmeralda",
+        "Canto do Forte",
+        "Guilhermina",
+        "Ilha das Caieiras",
+        "Imperador",
+        "Jardim Aloha",
+        "Jardim Anchieta",
+        "Jardim Aprazível",
+        "Jardim Boqueirão",
+        "Jardim Caieiras",
+        "Jardim Calmarias",
+        "Jardim Cavalcante",
+        "Jardim Corumbá",
+        "Jardim Fátima",
+        "Jardim Guaramar",
+        "Jardim Imperador",
+        "Jardim Imperador IV",
+        "Jardim Maracanã",
+        "Jardim Melvi",
+        "Jardim Mirian",
+        "Jardim Princesa",
+        "Jardim Quietude",
+        "Jardim Real",
+        "Jardim Samambaia",
+        "Jardim Santa Helena",
+        "Jardim São Jorge",
+        "Jardim Sônia",
+        "Jardim Tupã",
+        "Jardim Tupiniquins",
+        "Jardim Vicente de Carvalho",
+        "Mirim",
+        "Nova Mirim",
+        "Ocian",
+        "Parque das Américas",
+        "Quietude",
+        "Real",
+        "Ribeirópolis",
+        "Samambaia",
+        "Santa Marina",
+        "Sítio do Campo",
+        "Solemar",
+        "Tupi",
+        "Tupiry",
+        "Vila Antártica",
+        "Vila Assunção",
+        "Vila Balneária",
+        "Vila Caiçara",
+        "Vila Érica",
+        "Vila Guilhermina",
+        "Vila Harmonia",
+        "Vila Isabel",
+        "Vila Linda",
+        "Vila Magalhães",
+        "Vila Mirim",
+        "Vila Nova Mirim",
+        "Vila Ocean",
+        "Vila Sônia",
+        "Vila Tupi",
+        "Vila Tupiniquins",
+        "Vila Verde"
+    ]
+    return lista
+
+def tipos_imoveis():
+    lista = [
+    "Casa",
+    "Apartamento",
+    "Kitnet",
+    "Sobrado",
+    "Terreno",
+    "Loja",
+    "Sala comercial",
+    "Galpão",
+    "Chácara",
+    "Sítio",
+    "Fazenda",
+    "Ponto comercial",
+    "Prédio comercial",
+    "Lote",
+    "Imóvel na planta"
+]
+    return lista
+
+def bto_voltar(key):
+    col1, col2 = st.columns([14.5, 2])
+    with col2:
+        if st.button("←voltar", key=key):
+            st.switch_page(st.Page("pages/menu_gerenciador.py"))

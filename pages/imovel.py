@@ -1,12 +1,15 @@
 import streamlit as st
-
 from urllib.parse import unquote
 import function
-from functions import crud_image
+from functions import crud_image, style
 from PIL import Image
 import requests
 from io import BytesIO
 import base64
+
+# Aplica tema
+primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
+st.markdown(theme_css, unsafe_allow_html=True)
 
 @st.cache_data(show_spinner=False)
 def gerar_base64_imagem(url):
@@ -39,42 +42,14 @@ if not imovel:
     st.error("Imóvel não encontrado.")
     st.stop()
 
-# Define cores para tema claro e escuro e fonte azul padrão
-primary_text = st.get_option("theme.textColor") or "#000"
-secondary_text = "#888" if primary_text == "#000" else "#ccc"
-background_card = "#f7f7f7" if primary_text == "#000" else "#111"
-base_font = "'Segoe UI', sans-serif"
-accent_color = "#4689d6"  # azul médio vibrante
-
-# Estilo global aplicado
-st.markdown(f"""
-<style>
-    html, body, h1, h2, h3, h4, p, span, div, ul, li, a {{
-        font-family: {base_font} !important;
-        color: {primary_text};
-    }}
-    .secondary-text {{
-        color: {secondary_text};
-    }}
-    .accent-bg {{
-        background-color: {accent_color};
-        color: white;
-        padding: 10px 16px;
-        font-weight: bold;
-        text-align: center;
-        border-radius: 8px;
-    }}
-</style>
-""", unsafe_allow_html=True)
-
-# Breadcrumb e valores
+# Cabeçalho com breadcrumb
 st.markdown(f"""
 <div style='margin-bottom:20px;'>
-  <p class='secondary-text' style='font-size:14px;'>Venda / Praia Grande / {imovel['bairro']} / <strong>{imovel['tipo']} com {imovel['quarto']} Quartos</strong></p>
+  <p class='secondary-text' style='font-size:14px;'>Venda / Praia Grande / {imovel['bairro']} / <strong style='color:{primary_text};'>{imovel['tipo']} com {imovel['quarto']} Quartos</strong></p>
 </div>
 <div style='display:flex; flex-wrap:wrap; gap:40px; align-items:center; margin-bottom:20px;'>
   <div>
-    <h1 style='margin:0; font-size:32px;'>R$ {imovel['valor']:,.2f}</h1>
+    <h1 style='margin:0; font-size:32px; color:{primary_text};'>R$ {imovel['valor']:,.2f}</h1>
     <p class='secondary-text' style='margin:4px 0 0;'>Venda</p>
   </div>
   <div>
@@ -86,7 +61,7 @@ st.markdown(f"""
     <p class='secondary-text' style='margin:0;'>R$ {imovel['iptu']:,.2f}</p>
   </div>
 </div>
-<div style='display:flex; flex-wrap:wrap; gap:30px; font-size:16px; margin-bottom:30px;'>
+<div style='display:flex; flex-wrap:wrap; gap:30px; font-size:16px; color:{primary_text}; margin-bottom:30px;'>
   <span>📏 {imovel['area']} m²</span>
   <span>🛏 {imovel['quarto']} quarto(s)</span>
   <span>🛁 {imovel['banheiro']} banheiro(s)</span>
@@ -94,14 +69,14 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Endereço e descrição com fundo adaptável
+# Descrição e endereço
 st.markdown(f"""
 <div style="background-color:{background_card}; padding:25px 30px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:30px;">
-  <h4 style="margin-bottom:10px;">Endereço</h4>
-  <p style="margin:0; font-weight:bold;">{imovel.get('endereco', 'Endereço não informado')} - {imovel['bairro']}, Praia Grande - SP</p>
+  <h4 style="margin-bottom:10px; color:{primary_text};">Endereço</h4>
+  <p style="margin:0; font-weight:bold; color:{primary_text};">{imovel.get('endereco', 'Endereço não informado')} - {imovel['bairro']}, Praia Grande - SP</p>
   <br>
-  <h4 style="margin-bottom:10px;">Descrição</h4>
-  <p style="margin:0;">{imovel.get('descricao', 'Sem descrição')}</p>
+  <h4 style="margin-bottom:10px; color:{primary_text};">Descrição</h4>
+  <p style="margin:0; color:{primary_text};">{imovel.get('descricao', 'Sem descrição')}</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -113,7 +88,7 @@ if pasta:
     if imagens:
         st.markdown("<h3 style='margin-top:30px;'>📷 Galeria de Imagens</h3>", unsafe_allow_html=True)
         for i in range(0, len(imagens), 3):
-            linha = [img for img in imagens[i:i+3] if img is not None]
+            linha = imagens[i:i+3]
             colunas = st.columns(3)
             for idx, imagem in enumerate(linha):
                 if imagem is None:

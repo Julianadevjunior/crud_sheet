@@ -1,51 +1,30 @@
-import gspread
-from google.oauth2.service_account import Credentials
 import streamlit as st
 import function
-import pandas as pd
+import functions.crud_image
 from functions import style
 
 primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
 st.markdown(theme_css, unsafe_allow_html=True)
+function.bto_voltar(key="voltar_delete")
+st.markdown(f"""
+<div style="padding: 30px 10px; text-align: center; background-color: #dce6f7; border-radius: 8px; margin-top: 20px;">
+  <h2 style="margin-bottom: 10px; color: {primary_text}">🗑️ Excluir Imóvel</h2>
+  <p style="color: {secondary_text}; font-size: 18px;">Digite o código do imóvel que deseja remover da base.</p>
+</div>
+""", unsafe_allow_html=True)
 
-col1, col2 = st.columns([14.5, 2])
+cod = st.text_input("Digite o código do imóvel para deletar:", max_chars=10)
 
-with col2:
-    if st.button("←Voltar", key="Voltar_del"):
-        st.switch_page(st.Page("pages/menu_gerenciador.py"))
-# Tela para excluir informações
-
-dados = function.read_data()
-tabela = pd.DataFrame(dados)
-
-# verificar se tem o cod
-
-# qual linha está o código
-
-# Confirmar exclusão
-
-st.markdown("<p style='color:black; font-size:25px; text-align:center'><b>Excluir imóveis</b></p>", unsafe_allow_html=True)
-
-cont = st.container(border=True)
-
-with cont:
-    cod = st.text_input("Inserir código", value=1)
-    try:
-        cod = int(cod)
-    except:
-        st.error("Digite o número")
-    else:
-        try:
-            idx = list(tabela['id']).index(cod)
-        except:
-            st.error('Código não encontrado')
+if st.button("Deletar imóvel", type="primary"):
+    if cod:
+        dados = function.read_data()
+        ids = [str(d["id"]) for d in dados]
+        if cod in ids:
+            linha = ids.index(cod) + 2
+            function.delete_row(linha)
+            functions.crud_image.deletar_pasta_do_imovel(cod)
+            st.success(f"Imóvel código {cod} removido com sucesso.")
         else:
-            linha = 2 + idx
-            if st.checkbox(label='Confirmar', key="confirmar"):
-                if st.button("Excluir", key="bto_excluir"):
-                    function.delete_row(linha)
-                    st.success("Excluido com sucesso")
-                    st.rerun()
-
-
-
+            st.warning(f"Código {cod} não encontrado na base.")
+    else:
+        st.warning("Por favor, preencha o campo com um código válido.")
