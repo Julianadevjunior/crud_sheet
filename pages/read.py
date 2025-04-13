@@ -109,7 +109,7 @@ for i in range(0, len(dados), 3):
             thumb_url = get_image_url(id_imovel)
             img_base64 = gerar_base64_imagem(thumb_url) if thumb_url else "https://via.placeholder.com/400x280.png?text=Sem+Imagem"
             detalhes_url = f"/imovel?id={id_imovel}"
-            whatsapp_url = f"https://wa.me/55SEUNUMERO?text=Olá! Tenho interesse no imóvel de referência {id_imovel}."
+            whatsapp_url = f"https://wa.me/+5513974242919?text=Olá! Tenho interesse no imóvel de referência {id_imovel}."
 
             html_card = f"""
             <div style="border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); margin-bottom:30px; font-family:Segoe UI, sans-serif; background-color:white;">
