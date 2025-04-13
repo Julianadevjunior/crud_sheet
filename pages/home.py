@@ -1,10 +1,13 @@
 import streamlit as st
 import function
 import os
-import os
 from pathlib import Path
 import function  # usa sua função real
 from slugify import slugify
+from functions import style
+
+primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
+st.markdown(theme_css, unsafe_allow_html=True)
 
 # Carrega os dados dos imóveis
 dados = function.read_data()

@@ -3,14 +3,16 @@ from google.oauth2.service_account import Credentials
 import streamlit as st
 import os
 from functions import crud_sheet, crud_image  # Certifique-se que `crud_image` tem `upload_imagem`
+from functions import style
+
+primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
+st.markdown(theme_css, unsafe_allow_html=True)
 
 col1, col2 = st.columns([14.5, 2])
 
 with col2:
     if st.button("←Voltar", key="Voltar_del"):
         st.switch_page(st.Page("pages/menu_gerenciador.py"))
-
-st.markdown("<p style='color:black; font-size:25px; text-align:center'><b>Cadastrar imóveis</b></p>", unsafe_allow_html=True)
 
 dados = crud_sheet.read_data()
 

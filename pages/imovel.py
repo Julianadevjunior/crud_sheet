@@ -39,25 +39,54 @@ if not imovel:
     st.error("Imóvel não encontrado.")
     st.stop()
 
+# Define cores para tema claro e escuro e fonte azul padrão
+primary_text = st.get_option("theme.textColor") or "#000"
+secondary_text = "#888" if primary_text == "#000" else "#ccc"
+background_card = "#f7f7f7" if primary_text == "#000" else "#111"
+base_font = "'Segoe UI', sans-serif"
+accent_color = "#4689d6"  # azul médio vibrante
+
+# Estilo global aplicado
+st.markdown(f"""
+<style>
+    html, body, h1, h2, h3, h4, p, span, div, ul, li, a {{
+        font-family: {base_font} !important;
+        color: {primary_text};
+    }}
+    .secondary-text {{
+        color: {secondary_text};
+    }}
+    .accent-bg {{
+        background-color: {accent_color};
+        color: white;
+        padding: 10px 16px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 8px;
+    }}
+</style>
+""", unsafe_allow_html=True)
+
+# Breadcrumb e valores
 st.markdown(f"""
 <div style='margin-bottom:20px;'>
-  <p style='font-size:14px; color:#888;'>Venda / Praia Grande / {imovel['bairro']} / <strong style='color:black;'>{imovel['tipo']} com {imovel['quarto']} Quartos</strong></p>
+  <p class='secondary-text' style='font-size:14px;'>Venda / Praia Grande / {imovel['bairro']} / <strong>{imovel['tipo']} com {imovel['quarto']} Quartos</strong></p>
 </div>
 <div style='display:flex; flex-wrap:wrap; gap:40px; align-items:center; margin-bottom:20px;'>
   <div>
-    <h1 style='margin:0; font-size:32px; color:#1a1a1a;'>R$ {imovel['valor']:,.2f}</h1>
-    <p style='margin:4px 0 0; color:#555;'>Venda</p>
+    <h1 style='margin:0; font-size:32px;'>R$ {imovel['valor']:,.2f}</h1>
+    <p class='secondary-text' style='margin:4px 0 0;'>Venda</p>
   </div>
   <div>
     <p style='margin:0; font-weight:bold;'>Condomínio</p>
-    <p style='margin:0; color:#555;'>R$ {imovel['condominio']:,.2f}</p>
+    <p class='secondary-text' style='margin:0;'>R$ {imovel['condominio']:,.2f}</p>
   </div>
   <div>
     <p style='margin:0; font-weight:bold;'>IPTU</p>
-    <p style='margin:0; color:#555;'>R$ {imovel['iptu']:,.2f}</p>
+    <p class='secondary-text' style='margin:0;'>R$ {imovel['iptu']:,.2f}</p>
   </div>
 </div>
-<div style='display:flex; flex-wrap:wrap; gap:30px; font-size:16px; color:#333; margin-bottom:30px;'>
+<div style='display:flex; flex-wrap:wrap; gap:30px; font-size:16px; margin-bottom:30px;'>
   <span>📏 {imovel['area']} m²</span>
   <span>🛏 {imovel['quarto']} quarto(s)</span>
   <span>🛁 {imovel['banheiro']} banheiro(s)</span>
@@ -65,8 +94,9 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# Endereço e descrição com fundo adaptável
 st.markdown(f"""
-<div style="background-color:#f7f7f7; padding:25px 30px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:30px;">
+<div style="background-color:{background_card}; padding:25px 30px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:30px;">
   <h4 style="margin-bottom:10px;">Endereço</h4>
   <p style="margin:0; font-weight:bold;">{imovel.get('endereco', 'Endereço não informado')} - {imovel['bairro']}, Praia Grande - SP</p>
   <br>
@@ -75,6 +105,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# Galeria de imagens
 subpastas = crud_image.listar_pastas(crud_image.FOLDER_ID)
 pasta = next((p for p in subpastas if p["name"] == str(imovel["id"])), None)
 if pasta:

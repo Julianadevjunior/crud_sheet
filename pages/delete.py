@@ -3,7 +3,10 @@ from google.oauth2.service_account import Credentials
 import streamlit as st
 import function
 import pandas as pd
+from functions import style
 
+primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
+st.markdown(theme_css, unsafe_allow_html=True)
 
 col1, col2 = st.columns([14.5, 2])
 

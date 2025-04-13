@@ -2,6 +2,10 @@ import gspread
 from google.oauth2.service_account import Credentials
 import streamlit as st
 import function
+from functions import style
+
+primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
+st.markdown(theme_css, unsafe_allow_html=True)
 
 st.markdown("<p style='color:black; font-size:25px; text-align:center'><b>Login</b></p>", unsafe_allow_html=True)
 

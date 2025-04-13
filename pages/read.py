@@ -5,6 +5,34 @@ from PIL import Image
 import requests
 from io import BytesIO
 import base64
+from functions import style
+
+primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
+st.markdown(theme_css, unsafe_allow_html=True)
+
+st.markdown(
+    f"""
+    <style>
+    .stButton > button {{
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        background-color: #4A90E2;
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        transition: all 0.2s ease-in-out;
+    }}
+    .stButton > button:hover {{
+        background-color: #357ABD;
+        transform: scale(1.02);
+        cursor: pointer;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 # @st.cache_data(show_spinner=False)
@@ -37,8 +65,6 @@ def gerar_base64_imagem(url):
 
 
 # 🔹 Cabeçalho
-st.markdown("<h2 style='text-align:center; background-color:#4284ce; color:white; font:poppins'>Felipe Carlos Corretor</h2>", unsafe_allow_html=True)
-
 st.divider()
 
 
