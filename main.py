@@ -1,8 +1,7 @@
 import streamlit as st
 import os
 from functions import style
-from streamlit_option_menu import option_menu
-import streamlit_navigation_bar as sb
+
 
 
 # Aplica tema e estilos globais

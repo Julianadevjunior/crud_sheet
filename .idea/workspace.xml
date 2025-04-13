@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="914a52d4-6826-499a-b355-aa4c5d6c6fa4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pages/imovel.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/imovel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/read.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/read.py" afterDir="false" />
-    </list>
+    <list default="true" id="914a52d4-6826-499a-b355-aa4c5d6c6fa4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
