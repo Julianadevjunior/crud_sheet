@@ -15,11 +15,13 @@ def carregar_dados():
 
 @st.cache_data(show_spinner=False)
 def get_image_url(id_imovel):
+    """Busca a primeira imagem da pasta do imóvel (ordenada por nome)."""
     subpastas = crud_image.listar_pastas(crud_image.FOLDER_ID)
     pasta = next((p for p in subpastas if p["name"] == id_imovel), None)
     if not pasta:
         return None
     imagens = crud_image.listar_imagens(pasta["id"])
+    imagens.sort(key=lambda x: x.get("name", ""))  # Ordena por nome do arquivo
     return f"https://drive.google.com/uc?id={imagens[0]['id']}" if imagens else None
 
 @st.cache_data(show_spinner=False)
@@ -27,14 +29,31 @@ def gerar_base64_imagem(url):
     try:
         response = requests.get(url, timeout=5)
         response.raise_for_status()
-        image = Image.open(BytesIO(response.content)).convert("RGB")
+        image = Image.open(BytesIO(response.content))
+
+        # 🔁 Corrige a rotação com base no EXIF (se existir)
+        try:
+            exif = image._getexif()
+            if exif:
+                orientation_key = 274  # Tag de orientação
+                if orientation_key in exif:
+                    orientation = exif[orientation_key]
+                    if orientation == 3:
+                        image = image.rotate(180, expand=True)
+                    elif orientation == 6:
+                        image = image.rotate(270, expand=True)
+                    elif orientation == 8:
+                        image = image.rotate(90, expand=True)
+        except Exception:
+            pass  # Silenciosamente ignora se não conseguir ler EXIF
+
+        image = image.convert("RGB")
         buffer = BytesIO()
         image.save(buffer, format="JPEG", optimize=True, quality=60)
         base64_img = base64.b64encode(buffer.getvalue()).decode()
         return f"data:image/jpeg;base64,{base64_img}"
     except Exception:
         return "https://via.placeholder.com/400x280.png?text=Erro+Imagem"
-
 
 
 
