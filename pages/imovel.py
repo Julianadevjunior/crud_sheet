@@ -58,7 +58,7 @@ st.markdown(f"""
   </div>
   <div>
     <p style='margin:0; font-weight:bold;'>IPTU</p>
-    <p class='secondary-text' style='margin:0;'>R$ {imovel['iptu']:,.2f}</p>
+    <p class='secondary-text' style='margin:0;'>R$ {float(imovel['iptu']):,.2f}</p>
   </div>
 </div>
 <div style='display:flex; flex-wrap:wrap; gap:30px; font-size:16px; color:{primary_text}; margin-bottom:30px;'>

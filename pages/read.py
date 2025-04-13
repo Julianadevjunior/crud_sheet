@@ -35,6 +35,9 @@ def gerar_base64_imagem(url):
     except Exception:
         return "https://via.placeholder.com/400x280.png?text=Erro+Imagem"
 
+
+
+
 st.divider()
 
 dados = carregar_dados()
@@ -86,6 +89,7 @@ for i in range(0, len(dados), 3):
 
             thumb_url = get_image_url(id_imovel)
             img_base64 = gerar_base64_imagem(thumb_url) if thumb_url else "https://via.placeholder.com/400x280.png?text=Sem+Imagem"
+            st.write(thumb_url)
             detalhes_url = f"/imovel?id={id_imovel}"
             whatsapp_url = f"https://wa.me/55SEUNUMERO?text=Olá! Tenho interesse no imóvel de referência {id_imovel}."
 
