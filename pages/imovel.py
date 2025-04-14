@@ -43,19 +43,20 @@ if not imovel:
     st.stop()
 
 
+
 condominio = 0
 iptu = 0
-if imovel['iptu'].isnumeric() == True:
-    iptu = f"{float(imovel['iptu']):,.2f}"
-else:
-    iptu = 0
-
-if imovel['condominio'].isnumeric() == True:
+try:
     condominio = f"{float(imovel['condominio']):,.2f}"
-else:
-    condominio = 0
+except:
+    condominio = imovel['condominio']
 
+try:
+    iptu = f"{float(imovel['iptu']):,.2f}"
+except:
+    iptu = imovel['iptu']
 
+st.write(imovel['condominio'])
 
 # Cabeçalho com breadcrumb
 st.markdown(f"""
