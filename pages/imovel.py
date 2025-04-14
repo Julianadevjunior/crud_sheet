@@ -42,8 +42,6 @@ if not imovel:
     st.error("Imóvel não encontrado.")
     st.stop()
 
-
-
 condominio = 0
 iptu = 0
 try:
