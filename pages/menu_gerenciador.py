@@ -31,3 +31,10 @@ with col3:
         st.markdown("<h2 style='text-align:center; font-size:40px'>✏️</h2>", unsafe_allow_html=True)
         if st.button("Atualizar", key="bto_uo", use_container_width=True):
             st.switch_page(st.Page("pages/update.py"))
+
+col4, col5, col6 = st.columns([1, 1, 1])
+
+with col4:
+    with st.container(border=True):
+        st.markdown("<h2 style='text-align:center; font-size:40px'>🤝️</h2>", unsafe_allow_html=True)
+        st.link_button(label="CRM", url='https://crm-felipe.streamlit.app/home', use_container_width=True)
