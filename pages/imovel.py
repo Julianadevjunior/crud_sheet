@@ -47,10 +47,13 @@ condominio = 0
 iptu = 0
 if imovel['iptu'].isnumeric() == True:
     iptu = f"{float(imovel['iptu']):,.2f}"
+else:
+    iptu = 0
 
 if imovel['condominio'].isnumeric() == True:
     condominio = f"{float(imovel['condominio']):,.2f}"
-
+else:
+    condominio = 0
 
 
 
