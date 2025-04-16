@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="914a52d4-6826-499a-b355-aa4c5d6c6fa4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/imovel.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/imovel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/menu_gerenciador.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/menu_gerenciador.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/read.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/read.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
