@@ -27,8 +27,12 @@ def gerar_base64_imagem(url):
 query_params = st.query_params
 id_imovel = query_params.get("id", [None])[0]
 
+# ✅ Comportamento alternativo: define um valor padrão (ex: "1") durante o desenvolvimento
+# id_imovel = id_imovel or "1"
+
+# ✅ OU comportamento seguro em produção: alerta amigável
 if not id_imovel:
-    st.error("ID do imóvel não informado na URL.")
+    st.warning("Nenhum imóvel foi selecionado. Volte para a página inicial.")
     st.stop()
 
 @st.cache_data(show_spinner=False)
