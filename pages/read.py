@@ -5,6 +5,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import base64
+import pandas as pd
 
 primary_text, secondary_text, background_card, theme_css = style.get_theme_css(st)
 st.markdown(theme_css, unsafe_allow_html=True)
@@ -64,6 +65,8 @@ bairros = sorted(set([d["bairro"] for d in dados if d["bairro"]]))
 tipos = sorted(set([d["tipo"] for d in dados if d["tipo"]]))
 valores = [d["valor"] for d in dados if isinstance(d["valor"], (int, float))]
 
+tabela_dados = pd.DataFrame(dados)
+
 with st.sidebar:
     st.markdown(f"""
     <style>
@@ -76,10 +79,10 @@ with st.sidebar:
 
     bairro_selecionado = st.selectbox("Filtrar por bairro:", options=["Todos"] + bairros)
     tipo_selecionado = st.selectbox("Filtrar por tipo de imóvel:", options=["Todos"] + tipos)
-    quartos_opcao = st.selectbox("Quartos:", ["Todos", 1, 2, 3, 4, 5])
-    banheiros_opcao = st.selectbox("Banheiros:", ["Todos", 1, 2, 3, 4, 5])
-    valor_min = st.number_input("Valor mínimo (R$):", value=min(valores) if valores else 0, step=10000)
-    valor_max = st.number_input("Valor máximo (R$):", value=max(valores) if valores else 1000000, step=10000)
+    quartos_opcao = st.radio("🛏️Quartos:", ["Todos", 1, 2, 3, 4, 5], horizontal=True)
+    banheiros_opcao = st.radio("🚽Banheiros:", ["Todos", 1, 2, 3, 4, 5], horizontal=True)
+    valor_min = st.number_input("💲Valor mínimo (R$):", value=min(valores) if valores else 0, step=10000)
+    valor_max = st.number_input("💲Valor máximo (R$):", value=max(valores) if valores else 1000000, step=10000)
 
 # Aplica filtros
 if bairro_selecionado != "Todos":
@@ -99,6 +102,7 @@ for i in range(0, len(dados), 3):
     for idx, dado in enumerate(linha):
         with colunas[idx]:
             id_imovel = str(dado["id"])
+            valorf = float(f"{float(tabela_dados["valor"][int(id_imovel)]):.2f}")
             tipo = dado["tipo"]
             bairro = dado["bairro"]
             valor = dado["valor"]
@@ -126,7 +130,7 @@ for i in range(0, len(dados), 3):
                     <p style="margin:0 0 4px 0; font-size:13px; color:{secondary_text};">📍 {bairro}, Praia Grande/SP</p>
                     <h4 style="margin:4px 0; font-size:16px; color:{primary_text};">{tipo} com {quartos} quarto(s) e {banheiros} banheiro(s)</h4>
                     <p style="margin:4px 0; font-size:13px;">📐 Área útil: <strong>{area}m²</strong></p>
-                    <p style="margin:8px 0 0 0; font-size:16px; font-weight:bold; color:#2E7D32;">R$ {valor:,.2f}</p>
+                    <p style="margin:8px 0 0 0; font-size:16px; font-weight:bold; color:#2E7D32;">R$ {function.moeda(valorf)}</p>
                     <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
                       <a href="{detalhes_url}" style="text-decoration:none;">
                         <button style="padding:6px 10px; font-size:13px; border:1px solid #ccc; border-radius:6px; background:#f9f9f9; cursor:pointer;">

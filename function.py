@@ -197,3 +197,34 @@ def bto_voltar(key):
     with col2:
         if st.button("←voltar", key=key):
             st.switch_page(st.Page("pages/menu_gerenciador.py"))
+
+def corretor_number(valor, campo):
+    valor = str(valor)
+    for item in valor:
+        if item.isnumeric() == False:
+            if item != "," and item != ".":
+                valor = valor.replace(item, "")
+            elif item == ",":
+                valor = valor.replace(item, ".")
+    try:
+        valor = float(valor)
+        return valor
+    except:
+        st.error(f"Digite apenas números no campo {campo}")
+
+def moeda(valor):
+    valor = str(valor)
+    for item in valor:
+        if item.isnumeric() == False:
+            if item != "," and item != ".":
+                valor = valor.replace(item, "")
+            elif item == ",":
+                valor = valor.replace(item, ".")
+    valor = f"{float(valor):,.2f}"
+    if ',' in valor:
+        valor = valor.replace(',', '-')
+    if '.' in valor:
+        valor = valor.replace('.', ',')
+    if '-' in valor:
+        valor = valor.replace('-', '.')
+    return valor

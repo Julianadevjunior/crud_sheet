@@ -25,7 +25,8 @@ def gerar_base64_imagem(url):
         return "https://via.placeholder.com/400x280.png?text=Erro+Imagem"
 
 query_params = st.query_params
-id_imovel = query_params.get("id", [None])[0]
+id_imovel = query_params["id"]
+st.write(query_params["id"])
 
 # ✅ Comportamento alternativo: define um valor padrão (ex: "1") durante o desenvolvimento
 # id_imovel = id_imovel or "1"
@@ -58,7 +59,6 @@ try:
 except:
     iptu = imovel['iptu']
 
-st.write(imovel['condominio'])
 
 # Cabeçalho com breadcrumb
 st.markdown(f"""
@@ -96,10 +96,11 @@ secondary_color = "#ccc" if dark_background else secondary_text
 st.markdown(f"""
 <div style="background-color:#e0f2f7; padding:25px 30px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:30px;">
   <h4 style="margin-bottom:10px; color:black;">Endereço</h4>
-  <p style="margin:0; font-weight:bold; color:black;">{imovel.get('endereco', 'Endereço não informado')} - {imovel['bairro']}, Praia Grande - SP</p>
+  <p style="margin:0; font-weight:bold; color:black;">{imovel['bairro']}, Praia Grande - SP</p>
   <br>
   <h4 style="margin-bottom:10px; color:black;">Descrição</h4>
-  <p style="margin:0; color:{secondary_color};">{imovel.get('descricao', 'Sem descrição')}</p>
+  <p style="margin:0; color:black;">{imovel["descrição"]}</p>
+
 </div>
 """, unsafe_allow_html=True)
 
